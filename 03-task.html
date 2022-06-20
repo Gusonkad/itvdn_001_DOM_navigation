@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 3</title>
+
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      table,
+      th,
+      td {
+        border: 1px solid black;
+      }
+
+      td,
+      th {
+        padding: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <table id="statsTable">
+      <tr>
+        <th>Месяц</th>
+        <th>Отдел 1</th>
+        <th>Отдел 2</th>
+      </tr>
+      <tr>
+        <td>Январь</td>
+        <td>50</td>
+        <td>120</td>
+      </tr>
+      <tr>
+        <td>Февраль</td>
+        <td>60</td>
+        <td>140</td>
+      </tr>
+      <tr>
+        <td>Март</td>
+        <td>125</td>
+        <td>115</td>
+      </tr>
+      <tr>
+        <td>Апрель</td>
+        <td>87</td>
+        <td>100</td>
+      </tr>
+      <tr>
+        <td>Март</td>
+        <td>95</td>
+        <td>80</td>
+      </tr>
+      <tr>
+        <td>Июнь</td>
+        <td>115</td>
+        <td>90</td>
+      </tr>
+      <tr>
+        <td>Июль</td>
+        <td>125</td>
+        <td>100</td>
+      </tr>
+    </table>
+
+    <div id="result"></div>
+
+    <script>
+      /*
+              Задание:
+              Добавьте строку "Итого" для таблицы statsTable. Напишите сценарий, которым выведите во вторую ячейку этой строки сумму всех числовых значений второй колонки.
+              Выведите в третью ячейку этой строки сумму всех числовых значений из третьей колонки таблицы.
+              В div с id result выведите сообщение "Отдел 1 сделал больше продаж" или "Отдел 2 сделал больше продаж" на основе раннее вычисленных значений в строке "Итого".
+              Используйте любые методы, которые были рассмотрены на прошлых уроках.
+              */
+      //   console.log(document.querySelectorAll("#statsTable tr"));
+      let total = document.querySelector("#statsTable tr:first-child");
+      total.insertAdjacentHTML(
+        "beforeend",
+        '<th id="total">Итого за месяц</th>'
+      );
+      let row_list = document.querySelectorAll("#statsTable tr");
+      for (let i = 0; i < row_list.length; i += 1) {
+        // console.log(row_list[i]);
+        let elements_list = row_list[i].querySelectorAll(
+          "td:not(:first-child)"
+        );
+        let arr = [];
+        for (const item of elements_list) {
+          arr.push(item.innerText);
+        }
+        if (arr.length > 1) {
+          let sum = arr.reduce(function (a, b) {
+            return +a + +b;
+          });
+          console.log(sum);
+          row_list[i].insertAdjacentHTML("beforeend", `<td>${sum}</td>`);
+        }
+      }
+      /////////////////////////////////////
+
+      let gen_total = document.querySelector("#statsTable");
+      gen_total.insertAdjacentHTML(
+        "beforeend",
+        '<tr id="gen_total"><th>Итого</th></tr>'
+      );
+      let ele_list_1 = document.querySelectorAll("td:nth-child(2)");
+      const ele_list_1_arr = [...ele_list_1].map((num) => {
+        return num.innerText;
+      });
+      console.log(ele_list_1_arr);
+      if (ele_list_1_arr.length > 1) {
+        let sum1 = ele_list_1_arr.reduce(function (a, b) {
+          return +a + +b;
+        });
+        console.log(sum1);
+        let parent_tbl = document.querySelector("#gen_total");
+        let new_el = document.createElement("td");
+        new_el.innerHTML = sum1;
+        parent_tbl.appendChild(new_el);
+      }
+      let ele_list_2 = document.querySelectorAll("td:nth-child(3)");
+      const ele_list_2_arr = [...ele_list_2].map((num) => {
+        return num.innerText;
+      });
+      console.log(ele_list_2_arr);
+      if (ele_list_1_arr.length > 1) {
+        let sum2 = ele_list_2_arr.reduce(function (a, b) {
+          return +a + +b;
+        });
+        console.log(sum2);
+        let parent_tbl = document.querySelector("#gen_total");
+        let new_el_2 = document.createElement("td");
+        new_el_2.innerHTML = sum2;
+        parent_tbl.appendChild(new_el_2);
+      }
+    </script>
+  </body>
+</html>
